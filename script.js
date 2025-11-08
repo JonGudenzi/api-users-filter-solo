@@ -60,8 +60,13 @@ function filterUsers() {
         return (person.name.toLowerCase().includes(term) ||
             person.email.toLowerCase().includes(term) ||
             person.company.name.toLowerCase().includes(term));
-    })
+    }) 
     renderUsers(filtered);
+    if(filtered.length === 0) {
+        errorMsg.textContent = "No results";
+    } else {
+        errorMsg.textContent = "";
+    }
 }
 input.addEventListener("input", filterUsers);
 
