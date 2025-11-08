@@ -32,7 +32,8 @@ function renderUsers(usersArray) {
         btn.textContent = "More info";
         li.appendChild(btn);
         btn.addEventListener("click", function () {
-            if (btn.textContent === "More info") {
+            const extraInfo = li.querySelector(".extra-info");
+            if (!extraInfo) {
                 const extraInfo = document.createElement("p");
                 extraInfo.classList.add("extra-info");
                 extraInfo.textContent = `${person.phone} | ${person.website}`;
