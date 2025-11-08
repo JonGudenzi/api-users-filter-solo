@@ -11,39 +11,37 @@ function fetchUsers() {
         })
         .then(function (data) {
             allUsers = data;
-            renderUsers();
+            renderUsers(allUsers);
         })
         .catch(function () {
-            errorMsg.textContent = "unable to access server";
+            errorMsg.textContent = "Unable to connect to server";
         })
 }
 
-
-function renderUsers() {
-    list.innerHTML = "";
-    allUsers.forEach(function (person) {
+function renderUsers(usersArray) {
+    usersArray.forEach(function (person) {
         const li = document.createElement("li");
         li.textContent = `${person.name} | `;
-        const email = document.createElement("a");
-        email.href = `mailto:${person.email}`;
-        email.textContent = person.email;
-        li.appendChild(email);
-        const company = document.createTextNode(` - ${person.company.name} - `);
+        const emailTag = document.createElement("a");
+        emailTag.href = `mailto:${person.email}`;
+        emailTag.textContent = person.email;
+        li.appendChild(emailTag);
+        const company = document.createTextNode(` - ${person.company.name}   `);
         li.appendChild(company);
         const btn = document.createElement("button");
         btn.textContent = "More info";
         li.appendChild(btn);
         btn.addEventListener("click", function () {
             if (btn.textContent === "More info") {
-                const moreInfo = document.createElement("p");
-                moreInfo.classList.add("info-btn");
-                moreInfo.textContent = `${person.phone} | ${person.website}`;
-                li.appendChild(moreInfo);
+                const extraInfo = document.createElement("p");
+                extraInfo.classList.add("extra-info");
+                extraInfo.textContent = `${person.phone} | ${person.website}`;
+                li.appendChild(extraInfo);
                 btn.textContent = "X";
             } else {
-               const moreInfo = li.querySelector(".info-btn");
-                moreInfo.remove();
-                btn.textContent = "More info";
+                const extraInfo = li.querySelector(".extra-info");
+                extraInfo.remove();
+
             }
         })
         list.appendChild(li);
@@ -51,11 +49,15 @@ function renderUsers() {
 }
 
 function filterUsers() {
-const term = input.value.toLowerCase().trim();
-const filtered = allUsers.filter(function(person) {
-   return person.name.toLowerCase().includes(term);
-})
-renderUsers(filtered);
+    list.innerHTML = "";
+    const term = input.value.toLowerCase().trim();
+    const filtered = allUsers.filter(function (person) {
+        return (person.name.toLowerCase().includes(term) ||
+            person.email.toLowerCase().includes(term) ||
+            person.company.name.toLowerCase().includes(term));
+    })
+    renderUsers(filtered);
 }
+input.addEventListener("input", filterUsers);
 
 fetchUsers();
