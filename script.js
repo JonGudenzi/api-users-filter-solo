@@ -42,7 +42,7 @@ function renderUsers(usersArray) {
             } else {
                 const extraInfo = li.querySelector(".extra-info");
                 extraInfo.remove();
-
+                btn.textContent = "More info";
             }
         })
         list.appendChild(li);
