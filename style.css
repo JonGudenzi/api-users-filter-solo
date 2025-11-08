@@ -29,6 +29,12 @@ li {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.extra-info {
+  margin: 0 !important;
+  line-height: 1.4;
+  flex-basis: 100%;
+}
+
 button {
   margin-left: auto;
   cursor: pointer;

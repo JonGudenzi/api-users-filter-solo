@@ -18,39 +18,43 @@ function fetchUsers() {
         })
 }
 
+function createUserItem(person) {
+    const li = document.createElement("li");
+    li.textContent = `${person.name} | `;
+    const emailTag = document.createElement("a");
+    emailTag.href = `mailto:${person.email}`;
+    emailTag.textContent = person.email;
+    li.appendChild(emailTag);
+    const company = document.createTextNode(` - ${person.company.name}   `);
+    li.appendChild(company);
+    const btn = document.createElement("button");
+    btn.textContent = "More info";
+    li.appendChild(btn);
+    btn.addEventListener("click", function () {
+        const extraInfo = li.querySelector(".extra-info");
+        if (!extraInfo) {
+            const extraInfo = document.createElement("p");
+            extraInfo.classList.add("extra-info");
+            extraInfo.textContent = `${person.phone} | ${person.website}`;
+            li.appendChild(extraInfo);
+            btn.textContent = "X";
+        } else {
+            extraInfo.remove();
+            btn.textContent = "More info";
+        }
+    })
+    return li;
+}
+
 function renderUsers(usersArray) {
+    list.innerHTML = "";
     usersArray.forEach(function (person) {
-        const li = document.createElement("li");
-        li.textContent = `${person.name} | `;
-        const emailTag = document.createElement("a");
-        emailTag.href = `mailto:${person.email}`;
-        emailTag.textContent = person.email;
-        li.appendChild(emailTag);
-        const company = document.createTextNode(` - ${person.company.name}   `);
-        li.appendChild(company);
-        const btn = document.createElement("button");
-        btn.textContent = "More info";
-        li.appendChild(btn);
-        btn.addEventListener("click", function () {
-            const extraInfo = li.querySelector(".extra-info");
-            if (!extraInfo) {
-                const extraInfo = document.createElement("p");
-                extraInfo.classList.add("extra-info");
-                extraInfo.textContent = `${person.phone} | ${person.website}`;
-                li.appendChild(extraInfo);
-                btn.textContent = "X";
-            } else {
-                const extraInfo = li.querySelector(".extra-info");
-                extraInfo.remove();
-                btn.textContent = "More info";
-            }
-        })
+        const li = createUserItem(person);
         list.appendChild(li);
     })
 }
 
 function filterUsers() {
-    list.innerHTML = "";
     const term = input.value.toLowerCase().trim();
     const filtered = allUsers.filter(function (person) {
         return (person.name.toLowerCase().includes(term) ||
