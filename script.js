@@ -18,8 +18,7 @@ function fetchUsers() {
         })
 }
 
-function createUserItem(person) {
-    const li = document.createElement("li");
+function addUserInfo(li, person) {
     li.textContent = `${person.name} | `;
     const emailTag = document.createElement("a");
     emailTag.href = `mailto:${person.email}`;
@@ -27,6 +26,11 @@ function createUserItem(person) {
     li.appendChild(emailTag);
     const company = document.createTextNode(` - ${person.company.name}   `);
     li.appendChild(company);
+}
+
+function createUserItem(person) {
+    const li = document.createElement("li");
+    addUserInfo(li, person)
     const btn = document.createElement("button");
     btn.textContent = "More info";
     li.appendChild(btn);
@@ -60,9 +64,9 @@ function filterUsers() {
         return (person.name.toLowerCase().includes(term) ||
             person.email.toLowerCase().includes(term) ||
             person.company.name.toLowerCase().includes(term));
-    }) 
+    })
     renderUsers(filtered);
-    if(filtered.length === 0) {
+    if (filtered.length === 0) {
         errorMsg.textContent = "No results";
     } else {
         errorMsg.textContent = "";
