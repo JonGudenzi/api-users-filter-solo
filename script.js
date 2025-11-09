@@ -29,16 +29,13 @@ function addUserInfo(li, person) {
 }
 
 function addMoreInfoButton(li, person) {
- const btn = document.createElement("button");
+    const btn = document.createElement("button");
     btn.textContent = "More info";
     li.appendChild(btn);
     btn.addEventListener("click", function () {
         const extraInfo = li.querySelector(".extra-info");
         if (!extraInfo) {
-            const newInfo = document.createElement("p");
-            newInfo.classList.add("extra-info");
-            newInfo.textContent = `${person.phone} | ${person.website}`;
-            li.appendChild(newInfo);
+            addExtraInfo(li, person);
             btn.textContent = "X";
         } else {
             extraInfo.remove();
@@ -47,10 +44,17 @@ function addMoreInfoButton(li, person) {
     })
 }
 
+function addExtraInfo(li, person) {
+    const newInfo = document.createElement("p");
+    newInfo.classList.add("extra-info");
+    newInfo.textContent = `Phone: ${person.phone}\n Website: ${person.website}\n"${person.company.catchPhrase}"`;
+    li.appendChild(newInfo);
+}
+
 function createUserItem(person) {
     const li = document.createElement("li");
     addUserInfo(li, person)
-   addMoreInfoButton(li,person);
+    addMoreInfoButton(li, person);
     return li;
 }
 

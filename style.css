@@ -33,6 +33,7 @@ li {
   margin: 0 !important;
   line-height: 1.4;
   flex-basis: 100%;
+  white-space: pre-line;
 }
 
 button {
