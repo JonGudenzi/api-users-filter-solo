@@ -28,25 +28,29 @@ function addUserInfo(li, person) {
     li.appendChild(company);
 }
 
-function createUserItem(person) {
-    const li = document.createElement("li");
-    addUserInfo(li, person)
-    const btn = document.createElement("button");
+function addMoreInfoButton(li, person) {
+ const btn = document.createElement("button");
     btn.textContent = "More info";
     li.appendChild(btn);
     btn.addEventListener("click", function () {
         const extraInfo = li.querySelector(".extra-info");
         if (!extraInfo) {
-            const extraInfo = document.createElement("p");
-            extraInfo.classList.add("extra-info");
-            extraInfo.textContent = `${person.phone} | ${person.website}`;
-            li.appendChild(extraInfo);
+            const newInfo = document.createElement("p");
+            newInfo.classList.add("extra-info");
+            newInfo.textContent = `${person.phone} | ${person.website}`;
+            li.appendChild(newInfo);
             btn.textContent = "X";
         } else {
             extraInfo.remove();
             btn.textContent = "More info";
         }
     })
+}
+
+function createUserItem(person) {
+    const li = document.createElement("li");
+    addUserInfo(li, person)
+   addMoreInfoButton(li,person);
     return li;
 }
 
